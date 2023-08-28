@@ -1,0 +1,23 @@
+to outlets-generate [ num-outlets ]
+  create-outlets num-outlets  [
+    set location one-of patches with [
+        p-type = "block" and
+        count neighbors4 with [ p-type = "road" ] > 0
+       ]
+    move-to location
+    set shape "circle"
+    set size 0.8
+    set color white
+    ask location [
+      set pcolor 84 + random 6
+    ]
+    set visits 0 
+    set label-color black
+  ]
+end
+
+to-report outlets-distance [ a-smoker ]
+  let total-distance distance ( [ work-place ]  of a-smoker )  
+  set total-distance total-distance  +  distance ( [ smokers-home ]  of a-smoker )
+  report total-distance
+end

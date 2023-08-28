@@ -1,0 +1,33 @@
+breed [ smokers smoker ]
+breed [ outlets outlet ]
+
+
+globals[
+  roads ;; patches that are roads
+  flag
+  travel-count
+  average_cost
+]
+
+patches-own[
+  p-type
+]
+
+smokers-own [
+  journey
+  smokers-home
+  work-place
+  destination
+  getting-smokes
+  smoke-travel
+  smoke-distance
+]
+
+outlets-own [
+  location
+  visits
+]
+
+to set-globals
+  set average_cost 0
+end

@@ -1,0 +1,79 @@
+
+
+to set-state
+   set shape "person"
+   set size 0.8
+   set getting-smokes false
+   set journey patch-here
+   
+end
+
+to smokers-set-from-home-destination
+  ifelse random 10 = 1 [
+      set destination [ location ] of ( min-one-of outlets [ outlets-distance myself ])
+      set getting-smokes true
+    ][
+    set destination work-place
+    set getting-smokes false
+  ]
+end
+
+to smokers-generate [ num-smokers  ]
+  create-smokers num-smokers  [
+    set smokers-home one-of patches with [ p-type = "home" ] ;; give smoker home
+    move-to smokers-home ;; move there
+    set work-place one-of patches with [ p-type = "work" ] ;; give them a work place
+    set-state ; set apperance
+    smokers-set-from-home-destination ;; set detination
+    set color [ pcolor ] of destination ; set color
+    set smoke-travel 0
+    set smoke-distance 0
+  ]
+end
+
+
+to smokers-move 
+  let new-pos nobody
+  let place destination 
+  if distance place > 0 [
+    ifelse member? place neighbors4 [
+      set new-pos place
+      if getting-smokes [
+        ask destination [
+          ask one-of outlets-here [
+            set visits visits + 1
+            set label visits
+          ]
+        ] 
+        set getting-smokes false
+        set destination work-place
+        set smoke-travel smoke-travel + 1
+        set color [ pcolor ] of destination
+      ]
+    ][
+      let places neighbors4 with [
+      ( p-type = "road" ) and
+      ( self != [ journey ] of myself )  ;; make sure it does not go bac to previous move. thi stops it getting stuck
+      ]
+      set journey patch-here  ;; remember previous move
+      set new-pos min-one-of places [ distance place ]
+    ]
+    if new-pos != nobody [
+      move-to new-pos
+      set flag true
+    ]
+  ]
+  if getting-smokes [
+    set smoke-distance smoke-distance + 1
+  ]
+end
+
+to smokers-change-destination
+  ifelse destination = smokers-home [
+    smokers-set-from-home-destination
+  ][
+    set destination smokers-home
+    set getting-smokes false
+  ]
+  set color [ pcolor ] of destination
+end
