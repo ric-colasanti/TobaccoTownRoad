@@ -1,21 +1,17 @@
 
-to generate-blocks
+to generate-blocks [ bl-size ]
   ask patches[
-    set pcolor grey
-    set p-type "block"
+    ifelse  (floor((pxcor + max-pxcor - floor(bl-size - 1)) mod bl-size) = 0) or
+    (floor((pycor + max-pycor) mod bl-size) = 0) [
+      set pcolor yellow + 3
+      set p-type "road"
+    ][  
+      set pcolor grey
+      set p-type "block"
+    ]
   ]
 end
 
-to generate-roads [ bl-size ]
-  set roads patches with
-    [(floor((pxcor + max-pxcor - floor(bl-size - 1)) mod bl-size) = 0) or
-    (floor((pycor + max-pycor) mod bl-size) = 0)]
-
-  ask roads [
-    set pcolor yellow + 3
-    set p-type "road"
-  ]
-end
 
 to generate-workplaces [ num-work-places ]
    repeat num-work-places [

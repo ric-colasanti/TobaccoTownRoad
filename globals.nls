@@ -3,7 +3,6 @@ breed [ outlets outlet ]
 
 
 globals[
-  roads ;; patches that are roads
   flag
   travel-count
   average_cost

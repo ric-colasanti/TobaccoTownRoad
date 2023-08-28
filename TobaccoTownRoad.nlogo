@@ -10,8 +10,7 @@ to clear-exp
   clear-turtles
   set-globals ;; set global veriables
 
-  generate-blocks
-  generate-roads  block-size
+  generate-blocks block-size
   generate-workplaces number-of-work-spaces
   generate-homes number-of-homes
 
@@ -157,7 +156,7 @@ block-size
 block-size
 1
 10
-4.0
+6.0
 1
 1
 NIL
