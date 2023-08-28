@@ -260,10 +260,10 @@ average_cost
 11
 
 PLOT
-710
-270
-910
-420
+670
+280
+885
+450
 plot1
 NIL
 NIL
