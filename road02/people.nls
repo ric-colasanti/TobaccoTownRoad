@@ -1,0 +1,21 @@
+to generate-people [ num-people  ]
+  create-people num-people  [
+    set person-home one-of patches with [ p-type = "home" ] ;; give smoker home
+    move-to person-home ;; move there
+    set work-place one-of patches with [ p-type = "work" ] ;; give them a work place
+    set color blue
+    set shape "person"
+    set destination work-place
+  ]
+end
+
+
+to person-move
+  if distance destination > 0 [
+    let places neighbors4 with [
+      ( p-type = "road" )
+    ]
+    move-to min-one-of places [ distance [ destination ] of myself]
+  ]
+end
+

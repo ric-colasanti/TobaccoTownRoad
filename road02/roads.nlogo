@@ -1,10 +1,23 @@
 __includes [
   "global.nls"
-  "patches.nls" ;; generate-blocks generate-roads generate-workplaces generate-homes
+  "patches.nls"
+  "people.nls"
 ]
 
 to setup
-  generate-blocks
+  clear-all
+  generate-blocks 7
+  generate-homes 1
+  generate-workplaces 1
+  generate-people 1
+  reset-ticks
+end
+
+to go
+  ask people [
+     person-move
+  ]
+  tick
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -33,6 +46,40 @@ GRAPHICS-WINDOW
 1
 ticks
 30.0
+
+BUTTON
+43
+52
+116
+85
+NIL
+setup
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+44
+101
+116
+134
+NIL
+go
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

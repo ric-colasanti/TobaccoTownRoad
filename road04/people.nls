@@ -1,0 +1,31 @@
+to generate-people [ num-people  ]
+  create-people num-people  [
+    set person-home one-of patches with [ p-type = "home" ] ;; give smoker home
+    move-to person-home ;; move there
+    set work-place one-of patches with [ p-type = "work" ] ;; give them a work place
+    set color blue
+    set shape "person"
+    set destination work-place
+  ]
+end
+
+
+to person-move
+  let new-pos nobody
+  let place destination 
+  if distance place > 0 [
+    ifelse member? place neighbors4 [
+      set new-pos place
+    ][
+      let places neighbors4 with [
+      ( p-type = "road" ) and
+      ( self != [ journey ] of myself )  ;; make sure it does not go back to previous move. thi stops it getting stuck
+      ]
+      set journey patch-here  ;; remember previous move
+      set new-pos min-one-of places [ distance place ]
+    ]
+    if new-pos != nobody [
+      move-to new-pos
+    ]
+  ]
+end

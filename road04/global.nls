@@ -1,0 +1,13 @@
+breed [ people person ]
+
+patches-own[
+  p-type
+]
+
+
+people-own [
+  person-home
+  work-place
+  destination
+  journey
+]
