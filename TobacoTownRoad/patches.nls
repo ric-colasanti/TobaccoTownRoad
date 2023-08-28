@@ -1,0 +1,39 @@
+
+to generate-blocks [ bl-size ]
+  ask patches[
+    ifelse  (floor((pxcor + max-pxcor - floor(bl-size - 1)) mod bl-size) = 0) or
+    (floor((pycor + max-pycor) mod bl-size) = 0) [
+      set pcolor yellow + 3
+      set p-type "road"
+    ][  
+      set pcolor grey
+      set p-type "block"
+    ]
+  ]
+end
+
+
+to generate-workplaces [ num-work-places ]
+   repeat num-work-places [
+      ask  one-of patches with [
+        p-type = "block" and
+        count neighbors4 with [ p-type = "road" ] > 0
+       ][
+        set p-type "work"
+        set pcolor  62 + random 6
+       ]
+  ]
+end
+
+to generate-homes [ num-homes ]
+  repeat num-homes [
+      ask  one-of patches with [
+        p-type = "block" and
+        count neighbors4 with [ p-type = "road" ] > 0
+       ][
+        set p-type "home"
+        set pcolor  12 + random 6
+       ]  
+  ]
+
+end 
